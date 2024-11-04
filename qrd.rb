@@ -10,7 +10,7 @@ def exponentiate_modularly(base, index, modulus)
     end
         
     while index > 0
-        if index & 1
+        if index & 1 == 1
             residue = (residue * base) % modulus
         end
             
