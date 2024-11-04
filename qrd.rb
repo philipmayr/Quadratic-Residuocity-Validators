@@ -1,8 +1,30 @@
 # Prime Modulus Quadratic Residuosity Decider Algorithm
 
-def decide_prime_modulus_quadratic_residuosity(p, x)
-    b = (x ** ((p - 1) / 2)) % p
+def exponentiate_modularly(base, index, modulus)
+    residue = 1
     
+    base %= modulus
+    
+    if base == 0
+        return 0
+    end
+        
+    while index > 0
+        if index & 1
+            residue = (residue * base) % modulus
+        end
+            
+        base = (base * base) % modulus
+        index >>= 1
+    end
+    
+    return residue;   
+end
+
+def decide_prime_modulus_quadratic_residuosity(p, x)
+    i = (p - 1) / 2
+    b = exponentiate_modularly(x, i, p)
+
     if b == 1
         return true 
     else 
@@ -11,7 +33,7 @@ def decide_prime_modulus_quadratic_residuosity(p, x)
 end
 
 # get prime p
-print "Enter a prime number: "
+print "Enter a prime number modulus: "
 p = gets.to_i
 
 # get quadradic residue candidate
