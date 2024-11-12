@@ -1,14 +1,14 @@
-# Prime Modulus Quadratic Residuosity Decider Algorithm
+# Prime Modulus Quadratic Residuosity Decider
 
 def exponentiate_modularly(base, index, modulus)
+    if base == 0 return 0
+    if index == 0 return 1
+
+    if base > modulus base %= modulus;
+    if index == 1 return base;
+    
     residue = 1
     
-    base %= modulus
-    
-    if base == 0
-        return 0
-    end
-        
     while index > 0
         if index & 1 == 1
             residue = (residue * base) % modulus
@@ -18,14 +18,14 @@ def exponentiate_modularly(base, index, modulus)
         index >>= 1
     end
     
-    return residue;   
+    return residue;
 end
 
 def decide_prime_modulus_quadratic_residuosity(p, x)
-    i = (p - 1) / 2
+    i = (p - 1) >> 1
     b = exponentiate_modularly(x, i, p)
 
-    if b == 1
+    if b == 1 
         return true 
     else 
         return false
@@ -50,7 +50,7 @@ end
 
 puts
 
-# Known Factorization Composite Modulus Quadratic Residuosity Decider Algorithm
+# Known Factorization Composite Modulus Quadratic Residuosity Decider
 
 def decide_known_factorization_composite_modulus_quadratic_residuosity(p, q, x)
     if decide_prime_modulus_quadratic_residuosity(p, x) and decide_prime_modulus_quadratic_residuosity(q, x)
@@ -77,7 +77,7 @@ print "N æ " + N.to_s + " æ " + p.to_s + " ⋅ " + q.to_s + " æ " + "p ⋅ q"
 puts
 puts
 
-# quadradic residue candidate
+# get quadradic residue candidate
 print "Enter a quadratic residue candidate modulo " + N.to_s + ": "
 x = gets.to_i
 
