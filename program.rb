@@ -3,7 +3,7 @@
 def exponentiate_modularly(base, index, modulus)
     if base == 0 return 0
     if index == 0 return 1
-
+    
     if base > modulus base %= modulus;
     if index == 1 return base;
     
@@ -13,7 +13,7 @@ def exponentiate_modularly(base, index, modulus)
         if index & 1 == 1
             residue = (residue * base) % modulus
         end
-            
+        
         base = (base * base) % modulus
         index >>= 1
     end
@@ -26,8 +26,8 @@ def decide_prime_modulus_quadratic_residuosity(p, x)
     b = exponentiate_modularly(x, i, p)
 
     if b == 1 
-        return true 
-    else 
+        return true
+    else
         return false
     end
 end
