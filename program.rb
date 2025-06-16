@@ -1,90 +1,87 @@
 # Prime Modulated Quadratic Residuosity Validator
 
 def exponentiate_modularly(base, index, modulus)
-    if base == 0 return 0
-    if index == 0 return 1
+    if base == 0 then return 0 end
+    if index == 0 then return 1 end
     
-    if base > modulus base %= modulus;
-    if index == 1 return base;
+    if base > modulus then base %= modulus end
+    if index == 1 then return base end
     
     residue = 1
     
     while index > 0
-        if index & 1 == 1
-            residue = (residue * base) % modulus
-        end
+        if index & 1 == 1 then residue = (residue * base) % modulus end
         
         base = (base * base) % modulus
         index >>= 1
     end
     
-    return residue;
+    return residue
 end
 
-def validate_prime_modulated_quadratic_residuosity(p, x)
-    i = (p - 1) >> 1
-    b = exponentiate_modularly(x, i, p)
-
-    if b == 1 
+def validate_prime_modulated_quadratic_residuosity(prime_modulus, quadratic_residue_candidate)
+    exponent = (prime_modulus - 1) >> 1
+    congruence = exponentiate_modularly(quadratic_residue_candidate, exponent, prime_modulus)
+    
+    if congruence == 1 then
         return true
     else
         return false
     end
 end
 
-# get prime p
 print "Enter a prime number modulus: "
-p = gets.to_i
+prime_modulus = gets.to_i
 
-# get quadradic residue candidate
-print "Enter a quadratic residue candidate modulo " + p.to_s + ": "
-x = gets.to_i
+print "Enter a quadratic residue candidate modulo " + prime_modulus.to_s + ": "
+quadratic_residue_candidate = gets.to_i
 
 puts
 
-if validate_prime_modulated_quadratic_residuosity(p, x)
-    puts x.to_s + " is a quadratic residue modulo " + p.to_s + "."
+if validate_prime_modulated_quadratic_residuosity(prime_modulus, quadratic_residue_candidate)
+    quadratic_residue = quadratic_residue_candidate
+    puts quadratic_residue.to_s + " is a quadratic residue modulo " + prime_modulus.to_s + "."
 else
-    puts x.to_s + " is a quadratic nonresidue modulo " + p.to_s + "."
+    quadratic_nonresidue = quadratic_residue_candidate
+    puts quadratic_nonresidue.to_s + " is a quadratic nonresidue modulo " + prime_modulus.to_s + "."
 end
 
 puts
 
-# Factorized Composite Modulated Quadratic Residuosity Validator
+# Factorized Semiprime Modulated Quadratic Residuosity Validator
 
-def validate_factorized_composite_modulated_quadratic_residuosity(p, q, x)
-    if validate_prime_modulated_quadratic_residuosity(p, x) and validate_prime_modulated_quadratic_residuosity(q, x)
+def validate_factorized_semi_prime_modulated_quadratic_residuosity(first_prime_factor, second_prime_factor, quadratic_residue_candidate)
+    if validate_prime_modulated_quadratic_residuosity(first_prime_factor, quadratic_residue_candidate) and validate_prime_modulated_quadratic_residuosity(second_prime_factor, quadratic_residue_candidate)
         return true
     else
         return false
     end
 end
 
-# get prime p
 print "Enter first prime number: "
-p = gets.to_i
+first_prime_factor = gets.to_i
 
-# get prime q
 print "Enter second prime number: "
-q = gets.to_i
+second_prime_factor = gets.to_i
 
 puts
 
-N = p * q
+semiprime_modulus = first_prime_factor * second_prime_factor
 
-print "N æ " + N.to_s + " æ " + p.to_s + " ⋅ " + q.to_s + " æ " + "p ⋅ q"
-
-puts
-puts
-
-# get quadradic residue candidate
-print "Enter a quadratic residue candidate modulo " + N.to_s + ": "
-x = gets.to_i
+print "Semiprime modulus æ " + semiprime_modulus.to_s + " æ " + first_prime_factor.to_s + " ⋅ " + second_prime_factor.to_s + " æ " + "first prime factor ⋅ second prime factor"
 
 puts
+puts
 
-if validate_factorized_composite_modulated_quadratic_residuosity(p, q, x)
-    puts x.to_s + " is a quadratic residue modulo " + N.to_s + "."
+print "Enter a quadratic residue candidate modulo " + semiprime_modulus.to_s + ": "
+quadratic_residue_candidate = gets.to_i
+
+puts
+
+if validate_factorized_semi_prime_modulated_quadratic_residuosity(first_prime_factor, second_prime_factor, quadratic_residue_candidate)
+    quadratic_residue = quadratic_residue_candidate
+    puts quadratic_residue.to_s + " is a quadratic residue modulo " + semiprime_modulus.to_s + "."
 else
-    puts x.to_s + " is a quadratic nonresidue modulo " + N.to_s + "."
+    quadratic_nonresidue = quadratic_residue_candidate
+    puts quadratic_nonresidue.to_s + " is a quadratic nonresidue modulo " + semiprime_modulus.to_s + "."
 end
