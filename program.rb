@@ -1,4 +1,4 @@
-# Prime Modulus Quadratic Residuosity Decider
+# Prime Modulated Quadratic Residuosity Validator
 
 def exponentiate_modularly(base, index, modulus)
     if base == 0 return 0
@@ -21,7 +21,7 @@ def exponentiate_modularly(base, index, modulus)
     return residue;
 end
 
-def decide_prime_modulus_quadratic_residuosity(p, x)
+def validate_prime_modulated_quadratic_residuosity(p, x)
     i = (p - 1) >> 1
     b = exponentiate_modularly(x, i, p)
 
@@ -42,7 +42,7 @@ x = gets.to_i
 
 puts
 
-if decide_prime_modulus_quadratic_residuosity(p, x)
+if validate_prime_modulated_quadratic_residuosity(p, x)
     puts x.to_s + " is a quadratic residue modulo " + p.to_s + "."
 else
     puts x.to_s + " is a quadratic nonresidue modulo " + p.to_s + "."
@@ -50,10 +50,10 @@ end
 
 puts
 
-# Known Factorization Composite Modulus Quadratic Residuosity Decider
+# Factorized Composite Modulated Quadratic Residuosity Validator
 
-def decide_known_factorization_composite_modulus_quadratic_residuosity(p, q, x)
-    if decide_prime_modulus_quadratic_residuosity(p, x) and decide_prime_modulus_quadratic_residuosity(q, x)
+def validate_factorized_composite_modulated_quadratic_residuosity(p, q, x)
+    if validate_prime_modulated_quadratic_residuosity(p, x) and validate_prime_modulated_quadratic_residuosity(q, x)
         return true
     else
         return false
@@ -83,7 +83,7 @@ x = gets.to_i
 
 puts
 
-if decide_known_factorization_composite_modulus_quadratic_residuosity(p, q, x)
+if validate_factorized_composite_modulated_quadratic_residuosity(p, q, x)
     puts x.to_s + " is a quadratic residue modulo " + N.to_s + "."
 else
     puts x.to_s + " is a quadratic nonresidue modulo " + N.to_s + "."
