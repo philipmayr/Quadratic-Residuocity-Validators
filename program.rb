@@ -1,16 +1,21 @@
 # Prime Modulated Quadratic Residuosity Validator
 
 def exponentiate_modularly(base, index, modulus)
-    if base == 0 then return 0 end
-    if index == 0 then return 1 end
+    return 0 if base == 0
+    return 1 if index == 0
     
-    if base > modulus then base %= modulus end
-    if index == 1 then return base end
+    if base > modulus
+        base %= modulus
+    end
+    
+    return base if index == 1
     
     residue = 1
     
     while index > 0
-        if index & 1 == 1 then residue = (residue * base) % modulus end
+        if index & 1 == 1
+            residue = (residue * base) % modulus
+        end
         
         base = (base * base) % modulus
         index >>= 1
@@ -21,13 +26,9 @@ end
 
 def validate_prime_modulated_quadratic_residuosity(prime_modulus, quadratic_residue_candidate)
     exponent = (prime_modulus - 1) >> 1
-    congruence = exponentiate_modularly(quadratic_residue_candidate, exponent, prime_modulus)
+    residue = exponentiate_modularly(quadratic_residue_candidate, exponent, prime_modulus)
     
-    if congruence == 1 then
-        return true
-    else
-        return false
-    end
+    return (residue == 1) ? true : false
 end
 
 print "Enter a prime number modulus: "
